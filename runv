@@ -1,0 +1,5 @@
+#!/bin/bash
+
+make clean
+make debug
+valgrind --leak-check=full --tool=memcheck ./build/debug/fast_eval

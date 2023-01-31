@@ -1,0 +1,16 @@
+name: fast_eval.cpp
+channels:
+  - conda-forge
+dependencies:
+  - make
+  - cmake=3.17
+  - python=3.8
+  - eigen=3.4.0
+  - python-devtools=0.9.0
+  - pip
+  - pip:
+    - numpy>=1.23.3
+    - scikit-learn>=1.1.2
+    - sympy>=1.11.1
+    - pandas>=1.5.0
+    - setuptools>=65.4.0

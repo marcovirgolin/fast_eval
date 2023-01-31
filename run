@@ -1,0 +1,5 @@
+#!/bin/bash
+
+make clean
+make release
+./build/release/fast_eval
