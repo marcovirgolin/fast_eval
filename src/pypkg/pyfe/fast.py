@@ -20,7 +20,7 @@ def eval(expressions, dataset, verbose=False):
   Returns
   -------
   results : list of np.ndarray
-      Results of evaluations for the expressions on the dataset.
+    Results of evaluations for the expressions on the dataset.
   """
   results = _pyfe.eval(expressions, dataset, verbose)
   return results
