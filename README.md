@@ -1,2 +1,2 @@
-# fast_eval.cpp
+# fast_eval
 Fast evaluation of symbolic expressions in C++
