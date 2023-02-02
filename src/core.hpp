@@ -13,45 +13,6 @@
 using namespace std;
 using namespace Eigen;
 
-namespace split {
-
-  // Credit: Nawaz https://stackoverflow.com/a/5607650
-  struct tokens: std::ctype<char> 
-  {
-    tokens(): std::ctype<char>(get_table()) {}
-
-    static std::ctype_base::mask const* get_table()
-    {
-      typedef std::ctype<char> cctype;
-      static const cctype::mask *const_rc= cctype::classic_table();
-
-      static cctype::mask rc[cctype::table_size];
-      std::memcpy(rc, const_rc, cctype::table_size * sizeof(cctype::mask));
-
-      rc[','] = std::ctype_base::space; 
-      return &rc[0];
-    }
-  };
-
-  vector<vector<string>> strsplit(const vector<string> & vs) {
-    vector<vector<string>> vvs;
-    for (auto s : vs) {
-      std::stringstream ss(s);
-      ss.imbue(std::locale(std::locale(), new tokens()));
-      std::istream_iterator<std::string> begin(ss);
-      std::istream_iterator<std::string> end;
-      std::vector<std::string> vstrings(begin, end);
-      vvs.push_back(vstrings);
-    }
-    return vvs;
-  }
-
-  vector<string> strsplit(const string &s) {
-    vector<string> v = {s};
-    return strsplit(v)[0];
-  }
-}
-
 namespace fe {
 
   // This it the core of the library. 
@@ -92,6 +53,43 @@ namespace fe {
     } else {
       return {ArrayXd::Constant(D.rows(), stod(stack[idx])), idx};
     }
+  }
+
+
+  // Credit: Nawaz https://stackoverflow.com/a/5607650
+  struct tokens: std::ctype<char> 
+  {
+    tokens(): std::ctype<char>(get_table()) {}
+
+    static std::ctype_base::mask const* get_table()
+    {
+      typedef std::ctype<char> cctype;
+      static const cctype::mask *const_rc= cctype::classic_table();
+
+      static cctype::mask rc[cctype::table_size];
+      std::memcpy(rc, const_rc, cctype::table_size * sizeof(cctype::mask));
+
+      rc[','] = std::ctype_base::space; 
+      return &rc[0];
+    }
+  };
+
+  vector<vector<string>> strsplit(const vector<string> & vs) {
+    vector<vector<string>> vvs;
+    for (auto s : vs) {
+      std::stringstream ss(s);
+      ss.imbue(std::locale(std::locale(), new tokens()));
+      std::istream_iterator<std::string> begin(ss);
+      std::istream_iterator<std::string> end;
+      std::vector<std::string> vstrings(begin, end);
+      vvs.push_back(vstrings);
+    }
+    return vvs;
+  }
+
+  vector<string> strsplit(const string &s) {
+    vector<string> v = {s};
+    return strsplit(v)[0];
   }
 
 } 

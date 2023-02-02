@@ -22,7 +22,7 @@ py::list eval(py::list expressions, Eigen::Ref<const Eigen::MatrixXd> &dataset, 
   // transform to vectors of tokens (i.e. vecotr of vectors of strings)
   if (verbose) 
     cout << "Splitting expressions into tokens:" << endl;
-  auto exprs_split = split::strsplit(exprs);
+  auto exprs_split = fe::strsplit(exprs);
   
   // evaluate expressions
   if (verbose) 
