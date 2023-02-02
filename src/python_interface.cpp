@@ -8,7 +8,7 @@ namespace py = pybind11;
 using namespace std;
 
 
-py::list eval(py::list expressions, Eigen::Ref<const Eigen::MatrixXd> &dataset, bool verbose=false) { 
+py::list eval(py::list expressions, Eigen::Ref<const Eigen::MatrixXf> &dataset, bool verbose=false) { 
   // transform to vector of strings
   if (verbose) 
     cout << "Reading in expressions:" << endl;
@@ -37,7 +37,7 @@ py::list eval(py::list expressions, Eigen::Ref<const Eigen::MatrixXd> &dataset, 
   return res;
 }
 
-int read_data(Eigen::Ref<const Eigen::MatrixXd> &d) {
+int read_data(Eigen::Ref<const Eigen::MatrixXf> &d) {
   cout << d << endl;
   return 1;
 }

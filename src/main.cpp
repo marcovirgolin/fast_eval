@@ -16,14 +16,15 @@ int main(int argc, char** argv) {
   for(int e = 3; e < 6; e++){
     for(int n = 3; n < 6; n++){
       // create a random training set
-      auto X_train = MatrixXd::Random(pow(10,n),3);
+      MatrixXf X_train = MatrixXf::Random(pow(10,n),3);
       start = clock();
       for(int i = 0; i < pow(10,e); i++) {
-        auto out = fe::eval(expr_v, X_train);
+        auto out = fe::eval(expr_v, X_train).first;
       }
       end = clock();
       double time_taken = double(end - start) / double(CLOCKS_PER_SEC);
       cout << "e=10^"<<e<<", n=10^"<<n<<", runtime: "<<time_taken<<"s"<<endl;
+      
     }
   }
   return 0;

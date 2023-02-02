@@ -19,43 +19,44 @@ namespace fe {
   // Credit goes to Luca Manzoni (https://naturalcomputinglab.github.io/people/lmanzoni) 
   // for the idea of using this implementation and providing pseudo-code.
 
-  map<string, pair<function<ArrayXd(const vector<ArrayXd> &)>, int>> ops = {
-    {"+", {[](const vector<ArrayXd> &args){return args[0] + args[1];}, 2}},
-    {"-", {[](const vector<ArrayXd> &args){return args[0] - args[1];}, 2}},
-    {"*", {[](const vector<ArrayXd> &args){return args[0].cwiseProduct(args[1]);}, 2}},
-    {"/", {[](const vector<ArrayXd> &args){return args[0].cwiseQuotient(args[1]);}, 2}},
-    {"neg", {[](const vector<ArrayXd> &args){return -args[0];}, 1}},
-    {"sqrt", {[](const vector<ArrayXd> &args){return args[0].sqrt();}, 1}},
-    {"log", {[](const vector<ArrayXd> &args){return args[0].log();}, 1}},
-    {"exp", {[](const vector<ArrayXd> &args){return args[0].exp();}, 1}},
-    {"abs", {[](const vector<ArrayXd> &args){return args[0].abs();}, 1}},
-    {"sin", {[](const vector<ArrayXd> &args){return args[0].sin();}, 1}},
-    {"cos", {[](const vector<ArrayXd> &args){return args[0].cos();}, 1}},
-    {"tan", {[](const vector<ArrayXd> &args){return args[0].tan();}, 1}},
-    {"asin", {[](const vector<ArrayXd> &args){return args[0].asin();}, 1}},
-    {"acos", {[](const vector<ArrayXd> &args){return args[0].acos();}, 1}},
-    {"atan", {[](const vector<ArrayXd> &args){return args[0].atan();}, 1}},
+  map<string, pair<function<ArrayXf(const vector<ArrayXf> &)>, int>> ops = {
+    {"+", {[](const vector<ArrayXf> &args){return args[0] + args[1];}, 2}},
+    {"-", {[](const vector<ArrayXf> &args){return args[0] - args[1];}, 2}},
+    {"*", {[](const vector<ArrayXf> &args){return args[0].cwiseProduct(args[1]);}, 2}},
+    {"/", {[](const vector<ArrayXf> &args){return args[0].cwiseQuotient(args[1]);}, 2}},
+    {"neg", {[](const vector<ArrayXf> &args){return -args[0];}, 1}},
+    {"square", {[](const vector<ArrayXf> &args){return args[0].square();}, 1}},
+    {"sqrt", {[](const vector<ArrayXf> &args){return args[0].sqrt();}, 1}},
+    {"log", {[](const vector<ArrayXf> &args){return args[0].log();}, 1}},
+    {"exp", {[](const vector<ArrayXf> &args){return args[0].exp();}, 1}},
+    {"abs", {[](const vector<ArrayXf> &args){return args[0].abs();}, 1}},
+    {"sin", {[](const vector<ArrayXf> &args){return args[0].sin();}, 1}},
+    {"cos", {[](const vector<ArrayXf> &args){return args[0].cos();}, 1}},
+    {"tan", {[](const vector<ArrayXf> &args){return args[0].tan();}, 1}},
+    {"asin", {[](const vector<ArrayXf> &args){return args[0].asin();}, 1}},
+    {"acos", {[](const vector<ArrayXf> &args){return args[0].acos();}, 1}},
+    {"atan", {[](const vector<ArrayXf> &args){return args[0].atan();}, 1}},
   };
 
-  pair<ArrayXd, int> eval(const vector<string> &stack, const MatrixXd &D, int idx=0) {
+  pair<ArrayXf, int> eval(const vector<string> &stack, const MatrixXf &D, int idx=0) {
     if (ops.count(stack[idx])) {
       auto op = ops[stack[idx]];
-      vector<ArrayXd> args; args.reserve(2);
+      vector<ArrayXf> args; args.reserve(2);
       for (int i = 0; i < op.second; i++) {
-        auto res = eval(stack, D, idx + 1);
-        args.push_back(res.first);
-        idx = res.second;
+        auto [res, jdx] = eval(stack, D, idx + 1);
+        args.push_back(res);
+        idx = jdx;
       }
       return {op.first(args), idx};
     } else if (stack[idx][0] == 'x') {
       int feat_idx = stoi(stack[idx].substr(2));
       return {D.col(feat_idx), idx};
     } else {
-      return {ArrayXd::Constant(D.rows(), stod(stack[idx])), idx};
+      return {ArrayXf::Constant(D.rows(), stod(stack[idx])), idx};
     }
   }
 
-
+  // The following is a string split routine that splits on commas.
   // Credit: Nawaz https://stackoverflow.com/a/5607650
   struct tokens: std::ctype<char> 
   {
