@@ -3,7 +3,12 @@ Fast evaluation of symbolic expressions in C++ with a Python interface.
 The core algorithm is by [mnzluca](https://github.com/mnzluca).
 
 # Installation
-Install the conda environment, then run `./make`
+Install the conda environment, then compile and install with `make`:
+```
+conda env create -f environment.yml
+conda activate pyfe
+make
+```
 
 # Usage
 Expressions need to be in prefix notation, with comma-separated terms.
