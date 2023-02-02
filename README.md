@@ -1,5 +1,6 @@
 # fast_eval
-Fast evaluation of symbolic expressions in C++
+Fast evaluation of symbolic expressions in C++.
+The core algorithm is by [mnzluca](https://github.com/mnzluca).
 
 # Installation
 Install the conda environment, then run `./make`
