@@ -1,5 +1,5 @@
-# fast_eval
-Fast evaluation of symbolic expressions in C++.
+# pyfe
+Fast evaluation of symbolic expressions in C++ with a Python interface.
 The core algorithm is by [mnzluca](https://github.com/mnzluca).
 
 # Installation
